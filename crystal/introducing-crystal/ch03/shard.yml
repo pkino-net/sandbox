@@ -1,0 +1,13 @@
+name: ch03
+version: 0.1.0
+
+authors:
+  - p-kino <your-email-here>
+
+targets:
+  ch03:
+    main: src/ch03.cr
+
+crystal: 1.8.2
+
+license: MIT
