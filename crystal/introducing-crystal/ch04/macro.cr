@@ -19,10 +19,21 @@ puts(my_method)
 class User
   def initialize(@name : String, @age : Int32)
   end
-  
+
   my_getter name, age
 end
 
 user = User.new("Taro", 30)
 puts(user.name)
 puts(user.age)
+
+class Dog
+  def initialize(@name : String, @age : Int32)
+  end
+
+  getter name, age
+end
+
+dog = Dog.new("Jiro", 5)
+puts(dog.name)
+puts(dog.age)
