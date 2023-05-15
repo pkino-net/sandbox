@@ -1,3 +1,5 @@
+package com.p_kino.parser_lib_practice
+
 import scala.util.parsing.combinator.JavaTokenParsers
 
 class MtgManaCost extends JavaTokenParsers {
