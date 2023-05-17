@@ -3,7 +3,7 @@ package com.p_kino.parser_lib_practice
 import scala.util.parsing.combinator.JavaTokenParsers
 
 class JSON extends JavaTokenParsers {
-  def value: Parser[Any] =
+  def value: Parser[Any] = (
     objImproved
       | arr
       | stringLiteral
@@ -11,6 +11,7 @@ class JSON extends JavaTokenParsers {
       | "null" ^^ (x => null)
       | "true" ^^ (x => true)
       | "false" ^^ (x => false)
+    )
 
   def obj: Parser[Any] = "{"~repsep(member, ",")~"}"
 
