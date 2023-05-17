@@ -2,7 +2,7 @@ package com.p_kino.parser_lib_practice
 
 import scala.util.parsing.combinator.JavaTokenParsers
 
-class MtgManaCost extends JavaTokenParsers {
+class MtgManaCostParser extends JavaTokenParsers {
   private def generic: Parser[Int] = opt(wholeNumber) ^^ {
     case None => 0
     case Some(x) => x.toInt
@@ -15,9 +15,22 @@ class MtgManaCost extends JavaTokenParsers {
   private def green: Parser[Int] = rep("G") ^^ (_.length)
 
   def manaCost: Parser[Any] =
-    generic~colorless~white~blue~black~red~green
+    generic~colorless~white~blue~black~red~green ^^ {
+      case generic~colorless~w~u~b~r~g =>
+        MtgManaCost(generic, colorless, w, u, b, r, g)
+    }
 }
 
-object MtgManaCost extends MtgManaCost {
+object MtgManaCostParser extends MtgManaCostParser {
   def parseManaCost(arg: String) = parse(manaCost, arg)
 }
+
+case class MtgManaCost (
+  generic: Int,
+  colorless: Int,
+  white: Int,
+  blue: Int,
+  black: Int,
+  red: Int,
+  green: Int
+)
