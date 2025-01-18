@@ -29,6 +29,15 @@ sealed trait MyOption[+A] {
    */
   def orElse[B >: A](ob: => MyOption[B]): MyOption[B] =
     if (this != None) this else ob
+  
+  // 4.2
+  def variance(xs: Seq[Double]): MyOption[Double] =
+    mean(xs).flatMap(m => mean(xs.map(x => math.pow(x - m, 2))))
+
 }
+
 case class Some[+A](get: A) extends MyOption[A]
 case object None extends MyOption[Nothing]
+
+def mean(xs: Seq[Double]): MyOption[Double] =
+  if (xs.isEmpty) None else Some(xs.sum / xs.length)
