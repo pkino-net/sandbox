@@ -29,3 +29,9 @@ case class Right[+A](value: A) extends MyEither[Nothing, A]
 def mean(xs: IndexedSeq[Double]): MyEither[String, Double] =
   if (xs.isEmpty) Left("mean of empty list!")
   else Right(xs.sum / xs.length)
+
+def sequence[E, A](es: List[MyEither[E, A]]): MyEither[E, List[A]] =
+  es.foldRight[MyEither[E, List[A]]](Right(Nil))((e, acc) => e.map2(acc)(_ :: _))
+
+def traverse[E, A, B](as: List[A])(f: A => MyEither[E, B]): MyEither[E, List[B]] =
+  as.foldRight[MyEither[E, List[B]]](Right(Nil))((a, acc) => f(a).map2(acc)(_ :: _))
