@@ -18,9 +18,17 @@ object Tree {
     case Branch(t1, t2) =>
       maximum(t1).max(maximum(t2))
   }
+
+  // 3.27
+  def depth(t: Tree[_]): Int = t match {
+    case Leaf(i) =>
+      1
+    case Branch(t1, t2) =>
+      1 + depth(t1).max(depth(t2))
+  }
 }
 
 val l = Leaf(1)
-println(Tree.maximum(l)) // => 1
+println(Tree.depth(l)) // => 1
 val t = Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))
-println(Tree.maximum(t)) // => 3
+println(Tree.depth(t)) // => 3
