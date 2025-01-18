@@ -41,3 +41,15 @@ case object None extends MyOption[Nothing]
 
 def mean(xs: Seq[Double]): MyOption[Double] =
   if (xs.isEmpty) None else Some(xs.sum / xs.length)
+
+// 4.3
+def map2[A, B, C](a: MyOption[A], b: MyOption[B])(f: (A, B) => C): MyOption[C] =
+  a.flatMap(a => b.map(b => f(a, b)))
+
+val a = Some(1)
+val b = Some(2)
+println(map2[Int, Int, Int](a, b)(_ + _))        // Some(3)
+println(map2[Int, Int, Int](a, None)(_ + _))     // None
+println(map2[Int, Int, Int](None, b)(_ + _))     // None
+println(map2[Int, Int, Int](None, None)(_ + _))  // None
+
