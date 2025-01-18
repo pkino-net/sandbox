@@ -10,9 +10,17 @@ object Tree {
     case Branch(t1, t2) =>
       size(t1) + size(t2) + 1
   }
+
+  // 3.26
+  def maximum(t: Tree[Int]): Int = t match {
+    case Leaf(i) =>
+      i
+    case Branch(t1, t2) =>
+      maximum(t1).max(maximum(t2))
+  }
 }
 
 val l = Leaf(1)
-println(Tree.size(l)) // => 1
+println(Tree.maximum(l)) // => 1
 val t = Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))
-println(Tree.size(t)) // => 5
+println(Tree.maximum(t)) // => 3
