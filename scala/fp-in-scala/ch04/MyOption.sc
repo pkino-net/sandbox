@@ -49,7 +49,10 @@ def map2[A, B, C](a: MyOption[A], b: MyOption[B])(f: (A, B) => C): MyOption[C] =
 def sequence[A](as: List[MyOption[A]]): MyOption[List[A]] =
   as.foldRight[MyOption[List[A]]](Some(Nil))((a, acc) => map2(a, acc)(_ :: _))
 
-val a = Some(1)
-val b = Some(2)
-println(sequence(List(a, b)))       // => Some(1 :: 2 :: Nil)
-println(sequence(List(a, None, b))) // => None
+def traverse[A, B](as: List[A])(f: A => MyOption[B]): MyOption[List[B]] =
+  as.foldRight[MyOption[List[B]]](Some(Nil))((a, acc) => map2(f(a), acc)(_ :: _))
+
+val l1 = List(List(1.0, 2.0), List(3.0, 4.0))
+val l2 = List(List(1.0, 2.0), Nil)
+println(traverse(l1)(mean)) // => Some(List(1.5, 3.5))
+println(traverse(l2)(mean)) // => None
