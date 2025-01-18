@@ -34,9 +34,27 @@ object Tree {
     case Branch(t1, t2) =>
       Branch(map(t1)(f), map(t2)(f))
   }
+
+  /**
+   * 3.29
+   *
+   * この実装は間違っていて、Leafの中の値を変換する関数と
+   * Branchの2つのTreeを畳み込んだ結果を合成する関数の2つを
+   * 引数にとるのが正解だった
+   */
+  def fold[A, B](t: Tree[A], z: B)(f: (B, A) => B): B = {
+    def loop(t: Tree[A], acc: B): B = t match {
+      case Leaf(a) =>
+        f(acc, a)
+      case Branch(t1, t2) =>
+        loop(t2, loop(t1, acc))
+    }
+
+    loop(t, z)
+  }
 }
 
 val l = Leaf(1)
-println(Tree.map(l)(_ * 2)) // => Leaf(2)
+println(Tree.fold(l, 0)((acc, a) => acc + a)) // => 1
 val t = Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))
-println(Tree.map(t)(_ * 2)) // => Branch(Branch(Leaf(2), Leaf(4)), Leaf(6))
+println(Tree.fold(t, 1)((acc, a) => acc * a)) // => 6
