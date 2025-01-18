@@ -46,10 +46,10 @@ def mean(xs: Seq[Double]): MyOption[Double] =
 def map2[A, B, C](a: MyOption[A], b: MyOption[B])(f: (A, B) => C): MyOption[C] =
   a.flatMap(a => b.map(b => f(a, b)))
 
+def sequence[A](as: List[MyOption[A]]): MyOption[List[A]] =
+  as.foldRight[MyOption[List[A]]](Some(Nil))((a, acc) => map2(a, acc)(_ :: _))
+
 val a = Some(1)
 val b = Some(2)
-println(map2[Int, Int, Int](a, b)(_ + _))        // Some(3)
-println(map2[Int, Int, Int](a, None)(_ + _))     // None
-println(map2[Int, Int, Int](None, b)(_ + _))     // None
-println(map2[Int, Int, Int](None, None)(_ + _))  // None
-
+println(sequence(List(a, b)))       // => Some(1 :: 2 :: Nil)
+println(sequence(List(a, None, b))) // => None
