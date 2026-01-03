@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-echo -n "Hello $(basename $0)! May I ask your name: "
-read
-echo "Hello $REPLY"
+read -p "Hello $(basename $0)! May I ask your name: " name
+echo "Hello $name"
 exit 0
 
