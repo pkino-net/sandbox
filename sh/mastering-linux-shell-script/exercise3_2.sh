@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+if [ "mokhtar" != "Mokhtar" ] ; then
+  echo "文字列は同一ではありません"
+else
+  echo "文字列は同一です"
+fi
