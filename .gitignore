@@ -3,4 +3,9 @@
 .metals
 .scala-build
 
+# Python
+.venv
+
 .vscode
+
+.direnv
