@@ -2,5 +2,6 @@
 .bsp
 .metals
 .scala-build
+scala/**/target
 
 .vscode
